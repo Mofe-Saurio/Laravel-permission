@@ -1,0 +1,49 @@
+body, button, input, textarea{
+    font-family: scandia-web,sans-serif;
+    font-weight: 400;
+}
+.container h3::before{
+    content: "#";
+    font-weight: 400;
+    position: absolute;
+    font-size: 28px;
+    margin-left: -25px;
+    color: red;
+    opacity: .6;
+}
+.card-header{
+    padding: 0.75rem 2.25rem !important;
+}
+
+.callout{
+    display: flex;
+    align-items: center;
+    padding: 1.875em 1em;
+    background: #fff;
+    box-shadow: 0 20px 30px -16px rgba(9,9,16,.2);
+    margin-bottom: 2.5em;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 43.75em;
+}
+.callout .icon.purple{
+    background: red;
+    opacity: .5;
+
+}
+.callout .icon{
+    position: relative;
+    display: block;
+    width: 4.5em;
+    height: 4.5em;
+    margin: 0 1.5em 0 0;
+}
+.callout .icon img{
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+    user-select: none;
+}

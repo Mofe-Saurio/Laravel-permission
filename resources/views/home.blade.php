@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layouts.app')
 
 <style>
     .form-group{
@@ -8,8 +8,8 @@
 @section('content')
 
     <div class="card">
-        <div class="card-header">
-            <h2 class="card-title">Laravel DataTable + Permission roles</h2>
+        <div class="card-header ">
+            <h3 class="card-title">Laravel DataTable + Permission roles</h3>
         </div>
         <div class="card-body">
             <table class="table table-hover table-bordered responsive" id="laravel_datatable" style="width: 100%">
@@ -91,7 +91,7 @@
 
 
 
-    @stop
+@stop
 
 
 @push('script')
@@ -130,4 +130,4 @@
 
 
 
-    @endpush
+@endpush

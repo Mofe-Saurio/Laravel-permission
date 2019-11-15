@@ -11,5 +11,9 @@
 |
 */
 
-Route::get('/', 'UsersController@index');
+Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
 Route::get('users-list', 'UsersController@usersList');
+
+Auth::routes();
+
+Route::get('/home', 'UsersController@index')->name('home');
