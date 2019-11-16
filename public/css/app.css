@@ -44,6 +44,11 @@ body, button, input, textarea{
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-
     user-select: none;
+}
+blockquote{
+    margin-left: 60% !important;
+}
+blockquote:hover{
+    transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }

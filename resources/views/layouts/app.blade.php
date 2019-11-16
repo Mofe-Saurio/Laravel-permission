@@ -73,7 +73,7 @@
     </nav>
     @endauth
 
-    <div class="container py-4">
+    <div class="container-fluid py-4">
         @yield('content')
     </div>
 </div>
