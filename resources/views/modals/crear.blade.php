@@ -24,6 +24,19 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="rol">Rol</label>
+                                <select autofocus class="form-control" name="rol" id="rol">
+                                    <option value="Administrator">Administrator</option>
+                                    <option value="Soporte">Soporte</option>
+                                    <option value="Usuario">Usuario</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
                     {{--Row si existen errores--}}
                     <div class="row exist-errors">
                         <div class="col">

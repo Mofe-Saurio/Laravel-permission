@@ -10,9 +10,10 @@
     @endpush
     @push('blockquote')
         @can('crud')
-            Rol <code class="language-php">CRUD</code> acceso total
-        @else
-            <code class="language-php">admin123@email.com</code>
+            Rol <code class="language-php">Administrator</code> acceso total
+
+        @elsecan('read')
+            Rol <code class="language-php">Soporte</code> acceso lectura
         @endcan
 
     @endpush
@@ -23,7 +24,9 @@
                     <h4 class="card-title">Administrador de usuarios del sistema</h4>
                 </div>
                 <div class="col">
+                    @can('crud')
                     <button data-toggle="modal" data-target="#crear" class="btn btn-success float-right">Anadir usuario al sistema</button>
+                    @endcan
                 </div>
             </div>
         </div>
@@ -34,6 +37,7 @@
                     <th>Id</th>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Roles</th>
                     <th>Created at</th>
                     <th>Opciones</th>
                 </tr>
@@ -43,6 +47,7 @@
                     <th>Id</th>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Roles</th>
                     <th>Created at</th>
                     <th>Opciones</th>
                 </tr>
@@ -78,6 +83,7 @@
                     { data: 'id', name: 'id' },
                     { data: 'name', name: 'name' },
                     { data: 'email', name: 'email' },
+                    { data: 'roles[0].name', name: 'roles' },
                     { data: 'created_at', name: 'created_at' },
                     { data: 'action', name: 'action', orderable: false}
                 ]
@@ -133,6 +139,8 @@
         $(document).on('click', '.edit-modal-button', function() {
             $('#name').val($(this).data('nombre'));
             $('#email').val($(this).data('email'));
+            $('#rol').val($(this).data('rol'));
+
         });
 
 
