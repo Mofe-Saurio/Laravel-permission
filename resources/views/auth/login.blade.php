@@ -1,19 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-    <blockquote>
-        <div class="callout">
-            <div class="icon purple">
-                <img src="{{ asset('img/lightbulb.min.svg')}}">
-            </div>
-            <p class="content">
-                El email es: <code class="language-php">admin123@email.com</code> y la contraseña es: <code class="language-php">password</code>
-            </p>
-        </div>
-    </blockquote>
+   <style>
+
+       blockquote:hover{
+           transform: none !important;
+       }
+
+   </style>
+    @push('blockquote')
+        El email es: <code class="language-php">admin123@email.com</code> y la contraseña es: <code class="language-php">password</code>
+    @endpush
 <div class="container" style="margin-top: 5%">
-
-
     <div class="row justify-content-center">
         <h3>Laravel DataTable + Permission roles</h3>
 
@@ -72,5 +70,5 @@
 
     </div>
 </div>
+@stop
 
-@endsection

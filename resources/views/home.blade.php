@@ -1,15 +1,31 @@
 @extends('layouts.app')
 
-<style>
-    .form-group{
-        text-align: center;
-    }
-</style>
 @section('content')
+    @push('style')
+        <style>
+            blockquote{
+                margin-left: 10% !important;
+            }
+        </style>
+    @endpush
+    @push('blockquote')
+        @can('crud')
+            Rol <code class="language-php">CRUD</code> acceso total
+        @else
+            <code class="language-php">admin123@email.com</code>
+        @endcan
 
+    @endpush
     <div class="card">
-        <div class="card-header ">
-            <h3 class="card-title">Laravel DataTable + Permission roles</h3>
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <h4 class="card-title">Administrador de usuarios del sistema</h4>
+                </div>
+                <div class="col">
+                    <button data-toggle="modal" data-target="#crear" class="btn btn-success float-right">Anadir usuario al sistema</button>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <table class="table table-hover table-bordered responsive" id="laravel_datatable" style="width: 100%">
@@ -35,61 +51,11 @@
         </div>
     </div>
 
+
     <!-- Edit modal -->
-
-    <!-- The Modal -->
-    <div class="modal" id="editar">
-        <div class="modal-dialog modal-dialog-centered">
-            <form>
-                <div class="modal-content">
-
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">Administrar rol</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="name">Name</label>
-                                    <input readonly type="text" class="form-control" id="name" name="name">
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input readonly type="email" class="form-control" id="email" name="email">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="rol">Rol</label>
-                                    <select autofocus class="form-control" name="rol" id="rol">
-
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success" >Cambiar rol</button>
-                    </div>
-
-                </div>
-            </form>
-        </div>
-    </div>
-
-
+    @include('modals/edit')
+    <!-- Crear modal -->
+    @include('modals/crear')
 
 @stop
 
@@ -116,14 +82,60 @@
                     { data: 'action', name: 'action', orderable: false}
                 ]
             });
+        });
+
+        /*Inicializamos el token para las peticiones POST*/
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        /*Al dar submit del modal editar o guardar*/
+        $('#userForm').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                data: $('#userForm').serialize(),
+                url: "{{ route('users-create') }}",
+                type: "POST",
+
+                success: function (data) {
+                    var html = '';
+                    if(data.errors){
+                        html = '<div class="alert alert-danger">';
+                        for(var count = 0; count < data.errors.length; count++)
+                        {
+                            html += '<li>' + data.errors[count] + '</li>';
+                        }
+                        html += '</div>';
+                        $(".exist-errors").css("display", "block");
+                        $('#exist-errors').html(html);
+                        console.log(data.errors)
+                    }else{
+                        $('#userForm').trigger("reset");
+                        $('#crear').modal('hide');
+                        $('#laravel_datatable').DataTable().ajax.reload(); //Actualizar la tabla
+                        toastr.info('Usuario creado exitosamente!')
+                    }
+                },
+
+                error: function (data) {
+                    console.log('Error:', data);
+
+                }
+            });
+
 
 
         });
+
 
         $(document).on('click', '.edit-modal-button', function() {
             $('#name').val($(this).data('nombre'));
             $('#email').val($(this).data('email'));
         });
+
+
 
     </script>
 

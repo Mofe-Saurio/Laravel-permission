@@ -13,6 +13,7 @@
 
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
 Route::get('users-list', 'UsersController@usersList');
+Route::post('users-create', 'UsersController@crearUsuario')->name('users-create');
 
 Auth::routes();
 
