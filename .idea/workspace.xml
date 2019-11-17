@@ -4,10 +4,9 @@
     <list default="true" id="9234e978-598b-42ad-9590-2a0dd6c33879" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/modals/crear.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/modals/crear.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/modals/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/modals/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -170,7 +169,8 @@
       <updated>1573782812623</updated>
       <workItem from="1573782813853" duration="4598000" />
       <workItem from="1573853465170" duration="25825000" />
-      <workItem from="1573925148364" duration="9324000" />
+      <workItem from="1573925148364" duration="9761000" />
+      <workItem from="1573938132116" duration="3165000" />
     </task>
     <servers />
   </component>

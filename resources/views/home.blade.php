@@ -96,8 +96,47 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        /*Al dar submit del modal editar*/
+        $('#rolForm').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                data: $('#rolForm').serialize(),
+                url: "{{ route('users-changerol') }}",
+                type: "PUT",
 
-        /*Al dar submit del modal editar o guardar*/
+                success: function (data) {
+                    var html = '';
+                    if(data.errors){
+                        html = '<div class="alert alert-danger">';
+                        for(var count = 0; count < data.errors.length; count++)
+                        {
+                            html += '<li>' + data.errors[count] + '</li>';
+                        }
+                        html += '</div>';
+                        $(".exist-errors").css("display", "block");
+                        $('#exist-errors').html(html);
+                        console.log(data.errors)
+                    }else{
+                        console.log(data);
+                        $('#rolForm').trigger("reset");
+                        $('#editar').modal('hide');
+                        $('#laravel_datatable').DataTable().ajax.reload(); //Actualizar la tabla
+                        toastr.warning('Rol cambiado!')
+                    }
+                },
+
+                error: function (data) {
+                    console.log('Error:', data);
+
+                }
+            });
+
+
+
+        });
+
+
+        /*Al dar submit del modal crear*/
         $('#userForm').submit(function (e) {
             e.preventDefault();
             $.ajax({
@@ -140,6 +179,7 @@
             $('#name').val($(this).data('nombre'));
             $('#email').val($(this).data('email'));
             $('#rol').val($(this).data('rol'));
+            $('#id').val($(this).data('id'));
 
         });
 

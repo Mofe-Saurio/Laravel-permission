@@ -81,4 +81,11 @@ class UsersController extends Controller
         }
 
     }
+
+    public function changeRol(Request $request){
+        $user = User::find($request->id);
+        $user->syncRoles($request->input('rol'));
+        return response()->json(['success'=>'Rol cambiado']);
+
+    }
 }

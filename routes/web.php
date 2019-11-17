@@ -14,6 +14,7 @@
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
 Route::get('users-list', 'UsersController@usersList');
 Route::post('users-create', 'UsersController@crearUsuario')->name('users-create');
+Route::put('users-changerol', 'UsersController@changeRol')->name('users-changerol');
 
 Auth::routes();
 

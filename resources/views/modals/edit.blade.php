@@ -1,7 +1,7 @@
 <!-- The Modal -->
 <div class="modal fade" id="editar">
     <div class="modal-dialog modal-dialog-centered">
-        <form>
+        <form id="rolForm">
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
@@ -15,6 +15,7 @@
                             <div class="form-group">
                                 <label for="name">Name</label>
                                 <input readonly type="text" class="form-control" id="name" name="name">
+                                <input type="hidden" class="form-control" id="id" name="id">
                             </div>
                         </div>
                         <div class="col">
