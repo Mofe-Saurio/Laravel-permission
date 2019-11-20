@@ -53,9 +53,33 @@ body, button, input, textarea{
     user-select: none;
 }
 blockquote{
-    margin-left: 60% !important;
+    margin-left: 10% !important;
 }
 
 .form-group{
     text-align: center;
+}
+
+.table{
+    text-align: justify-all;
+}
+.offline{
+    background-color: rgba(255, 0, 0, 0.67) !important;
+}
+.online{
+    background-color: rgba(56, 193, 114, 0.84) !important;
+}
+
+.footer {
+
+    width: 100%;
+    margin: 0 auto;
+
+}
+#app{
+
+    min-height: 90vh;
+}
+.content-wrap{
+    padding-bottom: 1.5rem;    /* Footer height */
 }

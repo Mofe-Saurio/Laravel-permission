@@ -3,8 +3,8 @@ use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 
 class UsersTableSeeder extends Seeder
@@ -16,14 +16,15 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $role = Role::create(['name' => 'Administrator']);
-        Permission::create(['name' => 'crud']); //Creamos el permiso
-        $role->givePermissionTo('crud'); //Asignamos el permiso al rol creado
-//        $role->hasPermissionTo('destroy_notes');
+        App\User::create([
+            'name'      => 'Richard Gonzalez',
+            'email'     => 'admin123@email.com',
+            'password'     => bcrypt('password'),
 
-        factory(App\User::class, 1)->create();
-        $user = User::first();
-        $user->assignRole('Administrator');
+        ]);
+
+        factory(App\User::class, 10)->create();
+
 
 
     }

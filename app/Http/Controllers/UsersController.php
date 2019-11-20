@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
+
 class UsersController extends Controller
 {
     public function __construct()
@@ -16,76 +17,65 @@ class UsersController extends Controller
     }
 
     public function index(){
-//        dd(User::with('roles')->get());
+
+        $users = User::with('roles')->get() ;
 
 
-        return view('home');
+        return view('users.index', compact('users'));
     }
 
-    public function usersList(){
-        $user = Auth::user();
-//        $model = User::with('roles')->get();
-
-        if ($user->hasPermissionTo('crud')){
-            return dataTables()->of(User::with('roles')->get())
-//            return dataTables()->of(User::with('roles')->select('users.*'))
-//            return DataTables::eloquent($model)
-                ->addColumn('action', function($data){
-
-                    //Boton para editar
-                    $button = '<button class="edit-modal-button btn btn-warning" data-toggle="modal" data-target="#editar" style="margin-left:30%"
-                                data-id="'.$data->id.'" data-nombre="'.$data->name.'" data-email="'.$data->email.'" data-rol="'.$data->roles[0]['name'].'"><i class="fas fa-low-vision"></i></button>';
-
-                    return $button;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-
-        }
-        elseif ($user->hasPermissionTo('read')){
-            return dataTables()->of(User::with('roles')->get())
-                ->addColumn('action', function($data){
-
-                    //Boton para editar
-                    $button = '<button disabled class="edit-modal-button btn btn-warning" data-toggle="modal" data-target="#editar" style="margin-left:30%"
-                                data-id="'.$data->id.'" data-nombre="'.$data->name.'" data-email="'.$data->email.'"><i class="fas fa-low-vision"></i></button>';
-                    $button .= '&nbsp;&nbsp;';
-                    return $button;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-
+    public function create(Role $role)
+    {
+        $roles = Role::get();
+        return view('users.create',compact('roles'));
     }
 
-    public function crearUsuario(Request $request){
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'rol' => 'required'
+    public function store(Request $request)
+    {
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt('password')
         ]);
+        $user->assignRole($request->roles);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->all()]);
-        }else{
-            $user = User::Create([
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'password' => Hash::make('password')
-
-                ]
-            );
-            $user->assignRole($request->input('rol'));
-
-            return response()->json(['success'=>'Usuario creado con exito']);
-        }
-
+        toastr()->success('Usuario creado con exito!');
+//        return redirect()->route('products.edit',$product->id);
+        return redirect()->route('users.index');
     }
 
-    public function changeRol(Request $request){
-        $user = User::find($request->id);
-        $user->syncRoles($request->input('rol'));
-        return response()->json(['success'=>'Rol cambiado']);
 
+
+    public function show(User $user){
+        return view('users.show',compact('user'));
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return back()->with('info','Eliminado correctamente');
+    }
+
+    public function edit(User $user)
+    {
+        $roles = Role::get();
+        foreach ($roles as $role){
+            $rolename[] = $role->name;
+        }
+
+        return view('users.edit',compact('user','roles','rolename'));
+    }
+
+    public function update(Request $request, User $user)
+    {
+
+        //Actualice el usuario
+        $user->update($request->all());
+
+        //Acutalice los roles
+        $user->roles()->sync($request->get('roles'));
+
+        return redirect()->route('users.edit',$user->id)->with('info'.'Usuario actualizado con exito!');
     }
 }
