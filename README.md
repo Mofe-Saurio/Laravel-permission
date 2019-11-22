@@ -52,7 +52,7 @@ Iniciamos el servidor
 php artisan serve
 ```
 
-<p align="center"><img src="https://raw.githubusercontent.com/Mofe-Saurio/Laravel-DataTable/master/public/img/view.png" width="700"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/Mofe-Saurio/Laravel-permission/master/public/img/view.png" width="700"></p>
 
 ## Documentación
 - [Laravel Permission Documentation](https://docs.spatie.be/laravel-permission/v3/introduction/)
