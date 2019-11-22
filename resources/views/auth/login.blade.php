@@ -1,27 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <blockquote>
-        <div class="callout">
-            <div class="icon purple">
-                <img src="{{ asset('img/lightbulb.min.svg')}}">
-            </div>
-            <p class="content">
-                El email es: <code class="language-php">admin123@email.com</code> y la contraseña es: <code class="language-php">password</code>
-            </p>
-        </div>
-    </blockquote>
+
 <div class="container" style="margin-top: 5%">
-
-
     <div class="row justify-content-center">
-        <h3>Laravel DataTable + Permission roles</h3>
 
         <div class="col-md-8 my-4">
-
             <div class="card">
 
-                <div class="card-header">{{ __('Login') }}</div>
+                <div align="center" class="card-header"> <h2>Login de usuario</h2></div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -72,5 +59,5 @@
 
     </div>
 </div>
+@stop
 
-@endsection

@@ -1,7 +1,12 @@
 <?php
-
-use Illuminate\Database\Seeder;
 use App\User;
+use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\MorphPivot;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+
+
 class UsersTableSeeder extends Seeder
 {
     /**
@@ -11,6 +16,16 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 1)->create();
+        App\User::create([
+            'name'      => 'Mofe Saurio',
+            'email'     => 'admin123@email.com',
+            'password'     => bcrypt('password'),
+
+        ]);
+
+        factory(App\User::class, 10)->create();
+
+
+
     }
 }

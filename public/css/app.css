@@ -1,8 +1,9 @@
 body, button, input, textarea{
-    font-family: scandia-web,sans-serif;
+    font-family: scandia-web, Garamond, fantasy;
     font-weight: 400;
+
 }
-.container h3::before{
+.container h3::before , .container-fluid a h3::before{
     content: "#";
     font-weight: 400;
     position: absolute;
@@ -10,6 +11,7 @@ body, button, input, textarea{
     margin-left: -25px;
     color: red;
     opacity: .6;
+
 }
 .card-header{
     padding: 0.75rem 2.25rem !important;
@@ -24,13 +26,18 @@ body, button, input, textarea{
     margin-bottom: 2.5em;
     margin-left: 0;
     margin-right: 0;
-    max-width: 43.75em;
+    max-width: 60.75em;
 }
 .callout .icon.purple{
     background: red;
     opacity: .5;
 
 }
+/*Toastr notification*/
+.toast-top-right{
+    top: 80px !important;
+}
+
 .callout .icon{
     position: relative;
     display: block;
@@ -47,8 +54,41 @@ body, button, input, textarea{
     user-select: none;
 }
 blockquote{
-    margin-left: 60% !important;
+    margin-left: 10% !important;
 }
-blockquote:hover{
-    transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+
+.form-group{
+    text-align: center;
 }
+.pagination{
+    float: right;
+}
+.table{
+    text-align: justify-all;
+}
+.offline{
+    background-color: rgba(255, 0, 0, 0.67) !important;
+}
+.online{
+    background-color: rgba(56, 193, 114, 0.84) !important;
+}
+
+.footer {
+
+    width: 100%;
+    margin: 0 auto;
+
+}
+#app{
+
+    min-height: 90vh;
+}
+.content-wrap{
+    padding-bottom: 1.5rem;    /* Footer height */
+}
+.checkboxes{
+    width: 40% !important;
+    margin-left: 25% !important;
+
+}
+

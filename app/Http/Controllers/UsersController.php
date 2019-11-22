@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
 {
@@ -14,27 +15,76 @@ class UsersController extends Controller
 
     public function index(){
 
-        return view('home');
+        $users = User::with('roles')->paginate(5) ;
+
+
+
+        return view('users.index', compact('users'));
     }
 
-    public function usersList(){
-        return dataTables()->of(User::latest()->get())
-            ->addColumn('action', function($data){
+    public function create(Role $role)
+    {
+        $roles = Role::get();
+        return view('users.create',compact('roles'));
+    }
 
-                //Boton para editar
-                $button = '<button class="edit-modal-button btn btn-warning" data-toggle="modal" data-target="#editar" style="margin-left:30%"
-                                data-id="'.$data->id.'" data-nombre="'.$data->name.'" data-email="'.$data->email.'"><i class="fas fa-low-vision"></i></button>';
-                $button .= '&nbsp;&nbsp;';
-//                //Boton para cambiar la password
-//                $button .= '<button class="changepassword-modal-button btn btn-sm" data-toggle="modal" data-target="#cambiarpass"
-//                                data-id="'.$data->id.'" data-nombre="'.$data->name.'" data-apellido="'.$data->lastname.'"><i class="fas fa-key"></i></button>';
-//                $button .= '&nbsp;&nbsp;';
-//                //Boton para eliminar
-//                $button .= '<button class="delete-modal-button btn btn-sm" data-toggle="modal" data-target="#borrar"
-//                                data-id="'.$data->id.'" data-nombre="'.$data->name.'" data-apellido="'.$data->lastname.'"><i class="fas fa-trash"></i></button>';
-                return $button;
-            })
-            ->rawColumns(['action'])
-            ->make(true);
+    public function store(Request $request)
+    {
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt('password')
+        ]);
+        if ($request->roles != ''){
+            $user->assignRole($request->roles);
+        }
+        else{
+            $user->assignRole('Guest');
+        }
+
+
+        toastr()->success('Usuario creado con exito!');
+//        return redirect()->route('products.edit',$product->id);
+        return redirect()->route('users.index');
+    }
+
+
+
+    public function show(User $user){
+        return view('users.show',compact('user'));
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+        toastr()->error('Usuario eliminado con exito!');
+        return back();
+    }
+
+    public function edit(User $user)
+    {
+        $roles = Role::get();
+
+
+        return view('users.edit',compact('user','roles'));
+    }
+
+    public function update(Request $request, User $user)
+    {
+
+        //Actualice el usuario
+        $user->update($request->all());
+
+        //Acutalice los roles
+        if ($request->get('roles') != ''){
+            $user->roles()->sync($request->get('roles'));
+        }
+        else{
+            $user->assignRole('Guest');
+        }
+
+        toastr()->success('Usuario actualizado con exito!');
+        return redirect()->route('users.index');
     }
 }
