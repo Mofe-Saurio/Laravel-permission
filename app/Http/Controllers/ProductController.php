@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::get();
+        $products = Product::paginate(5);
 
         return view('products.index', compact('products'));
     }
@@ -37,7 +37,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $product = Product::create($request->all());
+        Product::create($request->all());
         toastr()->success('Producto guardado con exito!');
 //        return redirect()->route('products.edit',$product->id);
         return redirect()->route('products.index');
@@ -88,7 +88,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        toastr()->error('Eliminado correctamente');
+        toastr()->error('Producto eliminado correctamente');
         $product->delete();
         return back();
     }

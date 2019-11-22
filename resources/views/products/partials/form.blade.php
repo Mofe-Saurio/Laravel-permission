@@ -1,5 +1,5 @@
 <div class="form-group">
-    {{Form::label('name','Nombre del producto')}}
+    <h5>{{Form::label('name','Nombre del producto')}}</h5>
     {{Form::text('name',null,['class'=>'form-control'])}}
 </div>
 

@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
@@ -18,7 +15,8 @@ class UsersController extends Controller
 
     public function index(){
 
-        $users = User::with('roles')->get() ;
+        $users = User::with('roles')->paginate(5) ;
+
 
 
         return view('users.index', compact('users'));
@@ -38,7 +36,13 @@ class UsersController extends Controller
             'email' => $request->email,
             'password' => bcrypt('password')
         ]);
-        $user->assignRole($request->roles);
+        if ($request->roles != ''){
+            $user->assignRole($request->roles);
+        }
+        else{
+            $user->assignRole('Guest');
+        }
+
 
         toastr()->success('Usuario creado con exito!');
 //        return redirect()->route('products.edit',$product->id);
@@ -54,17 +58,16 @@ class UsersController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return back()->with('info','Eliminado correctamente');
+        toastr()->error('Usuario eliminado con exito!');
+        return back();
     }
 
     public function edit(User $user)
     {
         $roles = Role::get();
-        foreach ($roles as $role){
-            $rolename[] = $role->name;
-        }
 
-        return view('users.edit',compact('user','roles','rolename'));
+
+        return view('users.edit',compact('user','roles'));
     }
 
     public function update(Request $request, User $user)
@@ -74,8 +77,14 @@ class UsersController extends Controller
         $user->update($request->all());
 
         //Acutalice los roles
-        $user->roles()->sync($request->get('roles'));
+        if ($request->get('roles') != ''){
+            $user->roles()->sync($request->get('roles'));
+        }
+        else{
+            $user->assignRole('Guest');
+        }
 
-        return redirect()->route('users.edit',$user->id)->with('info'.'Usuario actualizado con exito!');
+        toastr()->success('Usuario actualizado con exito!');
+        return redirect()->route('users.index');
     }
 }

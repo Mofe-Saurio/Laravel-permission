@@ -1,22 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @push('style')
-        <style>
-            blockquote{
-                margin-left: 10% !important;
-            }
-        </style>
-    @endpush
-    @push('blockquote')
-        @role('SuperAdmin')
-        Rol <code class="language-php">Administrator</code> acceso total
-
-        @else
-            Rol <code class="language-php"></code> de acceso limitado
-        @endcan
-
-    @endpush
 
     <div class="card">
         <div class="card-header ">
@@ -43,9 +27,9 @@
                     <th>Id</th>
                     <th>Name</th>
                     <th>Sentence</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                    @if(auth()->user()->can('products.show') ||auth()->user()->can('products.edit') || auth()->user()->can('products.destroy') )
+                        <th colspan="4">Opciones</th>
+                    @endif
                 </tr>
                 </thead>
 
@@ -90,6 +74,9 @@
 
             </table>
 
+        </div>
+        <div class="card-footer ">
+            {{ $products->links() }}
         </div>
     </div>
 

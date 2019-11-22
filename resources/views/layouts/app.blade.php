@@ -48,3 +48,37 @@
 @stack('script')
 </html>
 
+<script>
+    //Script para actualizar campo is online en tabla user, si no se usa la funcion logout, si solo
+    // se cierra el navegador o el tab, se actualiza la bd igual
+
+    var is_chrome = /chrome/i.test( navigator.userAgent );
+    if(is_chrome){ //Si el browse es chrome
+        $(window).on('unload', function() {
+            logout();
+
+        });
+        function logout(){
+            $.ajax({
+                type: "GET",
+                url: "{{ route('logout') }}",
+            });
+            return 1+3;
+        }
+
+    }
+    else{ //Si es firefox
+        window.addEventListener('beforeunload', function (e) {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('logout') }}",
+            });
+
+        });
+    }
+
+
+
+
+
+</script>

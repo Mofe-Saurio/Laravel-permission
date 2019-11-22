@@ -16,7 +16,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::get();
+        $roles = Role::paginate(5);
 
         return view('roles.index', compact('roles'));
     }
@@ -28,7 +28,13 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permissions = Permission::get();
+        $users = Permission::where('tag','users')->get();
+        $products = Permission::where('tag','products')->get();
+        $roles = Permission::where('tag','roles')->get();
+
+        $permissions[0]= $users;
+        $permissions[1]= $products;
+        $permissions[2]= $roles;
 
         return view('roles.create',compact('permissions'));
     }
@@ -44,8 +50,8 @@ class RoleController extends Controller
 
         $role =  Role::create(['name' => $request->name]);
         $role->givePermissionTo($request->get('permissions'));
-
-        return redirect()->route('roles.edit',$role->id)->with('info'.'Roleo guardado con exito!');
+        toastr()->success('Rol creado con exito!');
+        return redirect()->route('roles.index',$role->id);
     }
 
     /**
@@ -67,7 +73,13 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        $permissions = Permission::get();
+        $users = Permission::where('tag','users')->get();
+        $products = Permission::where('tag','products')->get();
+        $roles = Permission::where('tag','roles')->get();
+
+        $permissions[0]= $users;
+        $permissions[1]= $products;
+        $permissions[2]= $roles;
         return view('roles.edit',compact('role','permissions'));
     }
 
@@ -84,7 +96,8 @@ class RoleController extends Controller
         $role->update($request->except(['permissions']));
 
         $role->permissions()->sync($request->get('permissions'));
-        return redirect()->route('roles.edit',$role->id)->with('info','Rol actualizado con exito');
+        toastr()->success('Rol actualizado con exito!');
+        return redirect()->route('roles.index',$role->id);
     }
 
     /**
@@ -96,6 +109,7 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         $role->delete();
-        return back()->with('info','Eliminado correctamente');
+        toastr()->error('Rol eliminado con exito!');
+        return back();
     }
 }

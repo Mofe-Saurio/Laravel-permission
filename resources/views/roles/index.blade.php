@@ -42,9 +42,9 @@
                 <tr>
                     <th>Id</th>
                     <th>Rol</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                    @if(auth()->user()->can('roles.show') ||auth()->user()->can('roles.edit') || auth()->user()->can('roles.destroy') )
+                        <th colspan="4">Opciones</th>
+                    @endif
                 </tr>
                 </thead>
 
@@ -53,24 +53,25 @@
                     <tr>
                         <td>{{ $rol->id }}</td>
                         <td>{{ $rol->name }}</td>
-
-
+                        @can('roles.edit')
                             <td width="10px">
                                 <a href="{{ route('roles.edit', $rol->id) }}" class="btn btn-warning">
                                     Editar
                                 </a>
                             </td>
+                        @endcan
 
 
-
+                        @can('roles.show')
                             <td width="10px">
                                 <a href="{{ route('roles.show', $rol->id) }}" class="btn btn-info">
                                     Ver
                                 </a>
                             </td>
+                        @endcan
 
 
-
+                        @can('roles.destroy')
                             <td width="10px">
                                 <form action="{{ route('roles.destroy', $rol->id) }}" method="POST">
                                     {{ method_field('DELETE') }}
@@ -80,6 +81,7 @@
                                     </button>
                                 </form>
                             </td>
+                        @endcan
 
 
                     </tr>
@@ -88,6 +90,9 @@
 
             </table>
 
+        </div>
+        <div class="card-footer ">
+            {{ $roles->links() }}
         </div>
     </div>
 

@@ -1,6 +1,7 @@
 body, button, input, textarea{
     font-family: scandia-web, Garamond, fantasy;
     font-weight: 400;
+
 }
 .container h3::before , .container-fluid a h3::before{
     content: "#";
@@ -59,7 +60,9 @@ blockquote{
 .form-group{
     text-align: center;
 }
-
+.pagination{
+    float: right;
+}
 .table{
     text-align: justify-all;
 }
@@ -83,3 +86,9 @@ blockquote{
 .content-wrap{
     padding-bottom: 1.5rem;    /* Footer height */
 }
+.checkboxes{
+    width: 40% !important;
+    margin-left: 25% !important;
+
+}
+
